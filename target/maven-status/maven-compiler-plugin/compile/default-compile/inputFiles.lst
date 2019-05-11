@@ -1,0 +1,13 @@
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/util/guice/JpaInitializer.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/Cell.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/StonesGameState.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/util/jpa/package-info.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/results/GameResultDao.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/util/guice/PersistenceModule.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/results/package-info.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/Player.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/IllegalMoveException.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/results/GameResult.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/MoveReader.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/StonesGame.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/util/jpa/GenericJpaDao.java
