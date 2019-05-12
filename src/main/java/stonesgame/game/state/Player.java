@@ -1,17 +1,28 @@
 package stonesgame.game.state;
 
 import  lombok.Getter;
+import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 public enum Player {
 
     PLAYER_REDSTONE('R'),
-    PLAYER_BLUESTONE('B');
+    PLAYER_BLUESTONE('B'),
+    TIE('T');
 
     private char symbol;
+    @Setter
+    @NotNull
+    private String name;
+
+    @Setter
+    private int steps;
 
     private Player(char symbol) {
         this.symbol = symbol;
+        steps = 0;
     }
 
     public Player opponent() {

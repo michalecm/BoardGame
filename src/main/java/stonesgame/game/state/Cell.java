@@ -10,17 +10,15 @@ public class Cell {
     public static final char EMPTY = '_';
     private int row;
     private int col;
-   //private char state;
 
     public Cell() {
-        //setOwner(EMPTY);
         setRow(0);
         setCol(0);
     }
 
     public Cell(int row, int col) {
-        this.row = row;
-        this.col = col;
+        setRow(row);
+        setCol(col);
     }
 
     public String toString() {

@@ -1,7 +1,10 @@
 package stonesgame.game.state;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Scanner;
 
+@Slf4j
 public class MoveReader {
 
     private Scanner scanner = new Scanner(System.in);
@@ -11,28 +14,42 @@ public class MoveReader {
     }
 
     public Cell readMove(StonesGameState state) {
-        if(state.isGameOver()) {
+
+        if (state.isGameOver()) {
             throw new IllegalStateException("Game is over!");
         }
-        String line = null;
+
         try {
-            if(!scanner.hasNextLine())
+            if(!scanner.hasNextLine()) {
                 return null;
-            String[] tokens = scanner.nextLine().trim().split("\\s+");
+            }
+
+            String[] tokens = null;
+            tokens = scanner.nextLine().trim().split("\\s+");
             if(tokens.length != 2) {
-                throw new IllegalMoveException("Too many coordinate values!");
+                throw new IllegalArgumentException("You had either too few or too many arguments!");
             }
 
             int row = Integer.parseInt(tokens[0]);
             int col = Integer.parseInt(tokens[1]);
+            if(!state.isInBounds(row, col)) {
+                throw new IllegalMoveException("Your choice of cell was out of bounds. Please try again!");
+            }
             if(!state.isValidMove(row, col)) {
-                throw new IllegalMoveException("This move is invalid. Please choose again.");
+                throw new IllegalMoveException("Your choice of cell was already taken by your opponent. Please try again!");
+            }
+            else {
+                return new Cell(row, col);
             }
 
-            return new Cell(row, col);
-        } catch(NumberFormatException e) {
-            throw new IllegalMoveException("Invalid input");
+        } catch (Exception e) {
+            if(e instanceof NumberFormatException) {
+                System.out.println("Please enter input that is of the type INTEGER.");
+            }
+            else {
+                System.out.println(e.getMessage());
+            }
+            return null;
         }
     }
-
 }

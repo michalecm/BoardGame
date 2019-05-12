@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 /**
- * DAI ckass for the {@link GameResult} entity.
+ * DAI class for the {@link GameResult} entity.
  */
 public class GameResultDao extends GenericJpaDao<GameResult> {
 
