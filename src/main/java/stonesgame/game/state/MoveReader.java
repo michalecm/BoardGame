@@ -4,6 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Scanner;
 
+/**
+ * Controller class to allow the player to interact with the board by playing pieces.
+ */
 @Slf4j
 public class MoveReader {
 
@@ -13,6 +16,14 @@ public class MoveReader {
 
     }
 
+    /**
+     * Receives an instance of the ongoing {@code StonesGameState} and checks
+     * user input for validity against the state. The purpose of this method is to
+     * alllow the user to choose a {@code Cell} to play into.
+     *
+     * @param state the current running instance of the {@code StonesGameState} class
+     * @return {@code Cell} which the {@code currentPlayer} chose to move to
+     */
     public Cell readMove(StonesGameState state) {
 
         if (state.isGameOver()) {

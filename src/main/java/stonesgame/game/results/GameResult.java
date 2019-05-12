@@ -51,6 +51,9 @@ public class GameResult {
     @Column(nullable = false)
     private ZonedDateTime created;
 
+    /**
+     * The timestamp of when the game session was persisted to the database.
+     */
     @PrePersist
     protected void onPersist() {
         created = ZonedDateTime.now();

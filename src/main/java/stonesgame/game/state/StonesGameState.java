@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  */
 @Data
 @Slf4j
-public class StonesGameState implements Cloneable {
+public class StonesGameState {
 
     private static final char EMPTY = '_';
     private static final char[][] INITIAL = new char[][]{
@@ -201,19 +201,6 @@ public class StonesGameState implements Cloneable {
 
     public boolean isInBounds(int row, int col){
        return row >= 0 && row < 5 && col >= 0 && col < 5;
-    }
-
-    public StonesGameState clone() {
-        StonesGameState copy = null;
-        try {
-            copy = (StonesGameState) super.clone();
-        } catch (CloneNotSupportedException e) {
-            for(int row = 0; row < 5; row++) {
-                copy.gameBoard[row] = gameBoard[row].clone();
-            }
-        }
-
-        return copy;
     }
 
     public String toString() {

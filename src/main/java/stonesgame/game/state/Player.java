@@ -5,6 +5,10 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Player class to provide player-change functionality to the game
+ * and to store some information about the players like their name and step-count.
+ */
 @Getter
 public enum Player {
 
@@ -25,6 +29,11 @@ public enum Player {
         steps = 0;
     }
 
+    /**
+     * This method is called to switch between players at the end of every turn.
+     *
+     * @return {@code currentPlayer}
+     */
     public Player opponent() {
         switch(this) {
             case PLAYER_REDSTONE:

@@ -13,9 +13,18 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+/**
+ * Main class of {@code StonesGame} where the {@code main} method runs.
+ */
 @Slf4j
 public class StonesGame {
 
+    /**
+     * {@code main} consists of player-name choosing, and sending and receiving information with the
+     * controller class {@code MoveReader}. {@code main} also persists end-game data to the database.
+     *
+     * @param args arguments from the command line
+     */
     public static void main(String[] args) {
         StonesGameState state = new StonesGameState();
         Injector injector = Guice.createInjector(new PersistenceModule("game"));
@@ -59,7 +68,6 @@ public class StonesGame {
             System.out.println("Draw");
 
         game = GameResult.builder()
-                .solved(true)
                 .player(state.getWinner().getName())
                 .duration(Duration.between(begin, LocalDateTime.now()))
                 .build();
