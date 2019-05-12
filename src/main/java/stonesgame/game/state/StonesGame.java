@@ -23,6 +23,10 @@ public class StonesGame {
      * {@code main} consists of player-name choosing, and sending and receiving information with the
      * controller class {@code MoveReader}. {@code main} also persists end-game data to the database.
      *
+     * Occasionally, there will be runtime issues with the database. These can be resolved by following the instructions here
+     * @see <a href="https://stackoverflow.com/questions/8158969/h2-database-error-database-may-be-already-in-use-locked-by-another-process>StackOverflow tutorial </a>
+     * and deleting the instance of the database as well as the lock file.
+     *
      * @param args arguments from the command line
      */
     public static void main(String[] args) {
@@ -44,19 +48,15 @@ public class StonesGame {
         System.out.flush();
         System.out.println("\n" + state);
         MoveReader reader = new MoveReader();
-        GameResult game = new GameResult();
+        GameResult game;
         boolean askName = true;
         while (!state.isGameOver()) {
-            Cell cellToMove = null;
+            Cell cellToMove;
 
             do {
-                //try {
-                    System.out.printf("%s's move: ", state.getCurrentPlayer().getName());
-                    System.out.flush();
-                    cellToMove = reader.readMove(state);
-                //} catch(IllegalMoveException e) {
-                    //System.err.println(e.getMessage());
-                //}
+                System.out.printf("%s's move: ", state.getCurrentPlayer().getName());
+                System.out.flush();
+                cellToMove = reader.readMove(state);
             } while (cellToMove == null);
             state.move(cellToMove.getRow(), cellToMove.getCol());
             System.out.println(state);

@@ -2,15 +2,8 @@ package stonesgame.game.state;
 
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class representing the state of the puzzle.
@@ -19,7 +12,14 @@ import java.util.regex.Pattern;
 @Slf4j
 public class StonesGameState {
 
+    /**
+     * Character defining empty space on the board.
+     */
     private static final char EMPTY = '_';
+
+    /**
+     * The array defining the initial game board setup.
+     */
     private static final char[][] INITIAL = new char[][]{
             {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
             {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
@@ -28,20 +28,42 @@ public class StonesGameState {
             {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY}
     };
 
+    /**
+     * The array to be instantiated for the actual board of the game.
+     */
+    @Setter(AccessLevel.PRIVATE)
     private char[][] gameBoard;
 
+    /**
+     * The count of pieces on the board.
+     */
     private int numOfMarks;
 
+    /**
+     * The current player.
+     */
     private Player currentPlayer;
 
+    /**
+     * The state of the game: ongoing or over.
+     */
     private boolean gameOver;
 
+    /**
+     * Winner of the game.
+     */
     private Player winner;
 
     public StonesGameState() {
         this(INITIAL);
     }
 
+    /**
+     * Single argument constructor of the game state.
+     * By default, it is called with an empty board.
+     *
+     * @param gameBoard playing board of the game
+     */
     public StonesGameState(char[][] gameBoard) {
         if (!isValidBoard(gameBoard)) {
             throw new IllegalArgumentException("Board is invalid!");
@@ -55,6 +77,12 @@ public class StonesGameState {
     }
 
 
+    /**
+     * Checks to see if the board is a valid board.
+     *
+     * @param gameBoard playing board of the game
+     * @return true if the board is valid, false if it is not
+     */
     public boolean isValidBoard(char[][] gameBoard)
     {
         if(gameBoard == null || gameBoard.length != 5) {
@@ -80,6 +108,13 @@ public class StonesGameState {
         return true;
     }
 
+    /**
+     * Function to place a piece on the board wherever the {@code currentPlayer}
+     * desires, as long as the position is valid.
+     *
+     * @param row x-value of the coordinate of the desired piece location
+     * @param col y-value of the coordinate of the desired piece location
+     */
     public void move(int row, int col) {
         if (!(isValidMove(row, col) && isInBounds(row, col))) {
             throw new IllegalMoveException("You cannot play this space!");
@@ -93,6 +128,13 @@ public class StonesGameState {
         currentPlayer = currentPlayer.opponent();
     }
 
+    /**
+     * Calculates if the game is over by checking the total number of pieces on the board against the maximum,
+     * and by checking to see if the {@code currentPlayer} has gotten a winning streak.
+     *
+     * @param row x-value of the coordinate of the desired piece location
+     * @param col y-value of the coordinate of the desired piece location
+     */
     public void calcIsGameOver(int row, int col) {
         if(numOfMarks == 25) {
             setGameOver(true);
@@ -107,10 +149,24 @@ public class StonesGameState {
         }
     }
 
+    /**
+     * Calls the winning-case checker methods.
+     *
+     * @param row x-value of the coordinate of the desired piece location
+     * @param col y-value of the coordinate of the desired piece location
+     * @return true if the {@code currentPlayer} has a winning streak, false if not
+     */
     private boolean checkForStreak(int row, int col){
         return (checkDiagonalWin() || checkHorizontalWin(row) || checkVerticalWin(col));
     }
 
+    /**
+     * Checks the row of the most recently placed piece by the {@code currentPlayer}
+     * for a winning streak.
+     *
+     * @param row x-value of the coordinate of the placed piece
+     * @return true if the {@code currentPlayer} has a winning streak, false if not
+     */
     private boolean checkHorizontalWin(int row) {
         StringBuilder builder = new StringBuilder();
         for(int x = 0; x < gameBoard[row].length; x++){
@@ -123,6 +179,13 @@ public class StonesGameState {
         return false;
     }
 
+    /**
+     * Checks the column of the most recently placed piece by the {@code currentPlayer}
+     * for a winning streak.
+     *
+     * @param col y-value of the coordinate of the placed piece
+     * @return true if the {@code currentPlayer} has a winning streak, false if not
+     */
     private boolean checkVerticalWin(int col) {
         StringBuilder builder = new StringBuilder();
         for(int x = 0; x < gameBoard.length; x++){
@@ -135,6 +198,11 @@ public class StonesGameState {
         return false;
     }
 
+    /**
+     * Checks the whole board and all of its possible diagonals for a winning streak.
+     *
+     * @return true if the {@code currentPlayer} has a winning streak, false if not
+     */
     private boolean checkDiagonalWin() {
         StringBuilder builder = new StringBuilder();
         //top-left middle
@@ -195,10 +263,24 @@ public class StonesGameState {
         return false;
     }
 
+    /**
+     * Checks to see if the desired move location is {@code EMPTY}
+     *
+     * @param row x-value of the coordinate of the desired piece location
+     * @param col y-value of the coordinate of the desired piece location
+     * @return true if is {@code EMPTY}, false if not
+     */
     public boolean isValidMove(int row, int col){
         return getGameBoard()[row][col] == EMPTY;
     }
 
+    /**
+     * Checks to see if the desired move location is in-bounds
+     *
+     * @param row x-value of the coordinate of the desired piece location
+     * @param col y-value of the coordinate of the desired piece location
+     * @return true if it is, false if it is not
+     */
     public boolean isInBounds(int row, int col){
        return row >= 0 && row < 5 && col >= 0 && col < 5;
     }
@@ -214,9 +296,5 @@ public class StonesGameState {
         }
 
         return builder.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new StonesGameState());
     }
 }

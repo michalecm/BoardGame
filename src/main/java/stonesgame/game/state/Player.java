@@ -24,7 +24,7 @@ public enum Player {
     @Setter
     private int steps;
 
-    private Player(char symbol) {
+    Player(char symbol) {
         this.symbol = symbol;
         steps = 0;
     }

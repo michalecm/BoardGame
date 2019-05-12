@@ -35,8 +35,7 @@ public class MoveReader {
                 return null;
             }
 
-            String[] tokens = null;
-            tokens = scanner.nextLine().trim().split("\\s+");
+            String[] tokens = scanner.nextLine().trim().split("\\s+");
             if(tokens.length != 2) {
                 throw new IllegalArgumentException("You had either too few or too many arguments!");
             }
