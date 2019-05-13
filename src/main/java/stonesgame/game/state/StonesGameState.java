@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.pool.TypePool;
 
+import javax.naming.ldap.InitialLdapContext;
+
 /**
  * Class representing the state of the puzzle.
  */
@@ -32,7 +34,7 @@ public class StonesGameState {
     /**
      * The array to be instantiated for the actual board of the game.
      */
-    @Setter(AccessLevel.PRIVATE)
+    //@Setter(AccessLevel.PRIVATE)
     private char[][] gameBoard;
 
     /**
@@ -66,6 +68,16 @@ public class StonesGameState {
         setGameOver(false);
         setNumOfMarks(0);
         setWinner(null);
+    }
+
+    public void init(){
+        for(int x = 0; x < gameBoard.length; x++){
+            for(int y = 0; y < gameBoard[x].length; y++) {
+                if(gameBoard[x][y] != EMPTY) {
+                    gameBoard[x][y] = EMPTY;
+                }
+            }
+        }
     }
 
     /**
