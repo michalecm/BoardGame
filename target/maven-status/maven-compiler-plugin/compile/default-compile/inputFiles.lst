@@ -2,6 +2,7 @@
 /home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/Cell.java
 /home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/StonesGameState.java
 /home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/util/jpa/package-info.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/package-info.java
 /home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/results/GameResultDao.java
 /home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/util/guice/PersistenceModule.java
 /home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/results/package-info.java
@@ -11,3 +12,4 @@
 /home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/MoveReader.java
 /home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/state/StonesGame.java
 /home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/util/jpa/GenericJpaDao.java
+/home/arvu/IdeaProjects/BoardGame/src/main/java/stonesgame/game/util/guice/package-info.java

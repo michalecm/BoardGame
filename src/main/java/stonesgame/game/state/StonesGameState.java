@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.pool.TypePool;
 
 /**
  * Class representing the state of the puzzle.
@@ -54,58 +55,17 @@ public class StonesGameState {
      */
     private Player winner;
 
-    public StonesGameState() {
-        this(INITIAL);
-    }
-
     /**
      * Single argument constructor of the game state.
      * By default, it is called with an empty board.
      *
-     * @param gameBoard playing board of the game
      */
-    public StonesGameState(char[][] gameBoard) {
-        if (!isValidBoard(gameBoard)) {
-            throw new IllegalArgumentException("Board is invalid!");
-        }
-
-        setGameBoard(gameBoard);
-        setNumOfMarks(0);
+    public StonesGameState() {
+        setGameBoard(INITIAL);
         setCurrentPlayer(Player.PLAYER_REDSTONE);
         setGameOver(false);
+        setNumOfMarks(0);
         setWinner(null);
-    }
-
-
-    /**
-     * Checks to see if the board is a valid board.
-     *
-     * @param gameBoard playing board of the game
-     * @return true if the board is valid, false if it is not
-     */
-    public boolean isValidBoard(char[][] gameBoard)
-    {
-        if(gameBoard == null || gameBoard.length != 5) {
-            return false;
-        }
-        for(int x = 0; x < gameBoard.length; x++) {
-            if(gameBoard[x] == null || gameBoard[x].length != 5) {
-                return false;
-            }
-
-            for(int y = 0; y < gameBoard[x].length; y++) {
-                if(gameBoard[x][y] != EMPTY) {
-                    if(!(gameBoard[x][y] == Player.PLAYER_REDSTONE.getSymbol() || gameBoard[x][y] == Player.PLAYER_BLUESTONE.getSymbol())) {
-                        return false;
-                    }
-                    else {
-                        return isGameOver();
-                    }
-                }
-            }
-        }
-
-        return true;
     }
 
     /**
@@ -116,14 +76,16 @@ public class StonesGameState {
      * @param col y-value of the coordinate of the desired piece location
      */
     public void move(int row, int col) {
-        if (!(isValidMove(row, col) && isInBounds(row, col))) {
-            throw new IllegalMoveException("You cannot play this space!");
+        if (!isInBounds(row, col)){
+            throw new IllegalMoveException("You cannot play this space! It is out of bounds!");
+        }
+        if(!isValidMove(row, col)) {
+            throw new IllegalMoveException("You cannot play this space, it is taken!");
         }
 
         gameBoard[row][col] = getCurrentPlayer().getSymbol();
         log.info("Player {} placed a piece at ({},{})", currentPlayer, row, col);
         numOfMarks++;
-        currentPlayer.setSteps(currentPlayer.getSteps()+1);
         calcIsGameOver(row, col);
         currentPlayer = currentPlayer.opponent();
     }
@@ -137,12 +99,12 @@ public class StonesGameState {
      */
     public void calcIsGameOver(int row, int col) {
         if(numOfMarks == 25) {
-            setGameOver(true);
             setWinner(null);
+            setGameOver(true);
         }
         else if(checkForStreak(row, col)) {
-            setGameOver(true);
             setWinner(currentPlayer);
+            setGameOver(true);
         }
         else {
             setGameOver(false);
@@ -271,7 +233,7 @@ public class StonesGameState {
      * @return true if is {@code EMPTY}, false if not
      */
     public boolean isValidMove(int row, int col){
-        return getGameBoard()[row][col] == EMPTY;
+        return gameBoard[row][col] == EMPTY;
     }
 
     /**
@@ -282,7 +244,8 @@ public class StonesGameState {
      * @return true if it is, false if it is not
      */
     public boolean isInBounds(int row, int col){
-       return row >= 0 && row < 5 && col >= 0 && col < 5;
+       log.info("{}",row >= 0 && row < 5 && col >= 0 && col < 5);
+        return row >= 0 && row < 5 && col >= 0 && col < 5;
     }
 
     public String toString() {
@@ -292,7 +255,7 @@ public class StonesGameState {
                 builder.append(gameBoard[row][col]).append(' ');
             }
 
-            builder.append('\n');
+            builder.append("\n");
         }
 
         return builder.toString();
