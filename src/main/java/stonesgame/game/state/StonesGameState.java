@@ -97,6 +97,7 @@ public class StonesGameState {
 
         gameBoard[row][col] = getCurrentPlayer().getSymbol();
         log.info("Player {} placed a piece at ({},{})", currentPlayer, row, col);
+        getCurrentPlayer().setTurns(getCurrentPlayer().getTurns() + 1);
         numOfMarks++;
         calcIsGameOver(row, col);
         currentPlayer = currentPlayer.opponent();
@@ -111,7 +112,7 @@ public class StonesGameState {
      */
     public void calcIsGameOver(int row, int col) {
         if(numOfMarks == 25) {
-            setWinner(null);
+            setWinner(Player.PLAYER_TIE);
             setGameOver(true);
         }
         else if(checkForStreak(row, col)) {

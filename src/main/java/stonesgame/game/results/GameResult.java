@@ -30,14 +30,14 @@ public class GameResult {
     private String player;
 
     /**
-     * Indicated whether the player completed the objective of 5 in a row.
+     * Indicated whether the player completed the objective of 3 in a row.
      */
     private boolean solved;
 
     /**
-     * The number of stones in a row by the player.
+     * The number of turns taken by the player;
      */
-    private int stonesInRow;
+    private int turns;
 
     /**
      * The duration of the game.

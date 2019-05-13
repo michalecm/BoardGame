@@ -13,12 +13,17 @@ import javax.validation.constraints.NotNull;
 public enum Player {
 
     PLAYER_REDSTONE('R'),
-    PLAYER_BLUESTONE('B');
+    PLAYER_BLUESTONE('B'),
+    PLAYER_TIE('T');
 
     private char symbol;
     @Setter
     @NotNull
     private String name;
+
+    @Setter
+    @Getter
+    private int turns;
 
     Player(char symbol) {
         this.symbol = symbol;

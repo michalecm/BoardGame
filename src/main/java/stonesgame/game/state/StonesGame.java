@@ -9,8 +9,11 @@ import stonesgame.game.util.guice.PersistenceModule;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.lang.reflect.GenericArrayType;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -35,21 +38,23 @@ public class StonesGame {
         GameResultDao dao = injector.getInstance(GameResultDao.class);
         Scanner scanner = new Scanner(System.in);
         LocalDateTime begin = LocalDateTime.now();
+        Player.PLAYER_TIE.setName("TIE");
         System.out.println("Welcome to STONESGAME! ~ ~ ~ ~\n");
         do {
             System.out.print("Player 1 of REDSTONE, please enter your name: ");
             Player.PLAYER_REDSTONE.setName(scanner.nextLine());
         }while(Player.PLAYER_REDSTONE.getName().equals(null) || Player.PLAYER_REDSTONE.getName().length() < 1);
+        log.info("Player {} entered the game with the name {}", Player.PLAYER_REDSTONE, Player.PLAYER_REDSTONE.getName());
         do {
             System.out.print("\nPlayer 2 of BLUESTONE, please enter your name: ");
             Player.PLAYER_BLUESTONE.setName(scanner.nextLine());
-        }while(Player.PLAYER_REDSTONE.getName().equals(null) || Player.PLAYER_REDSTONE.getName().length() < 1);
+        }while(Player.PLAYER_BLUESTONE.getName().equals(null) || Player.PLAYER_BLUESTONE.getName().length() < 1);
+        log.info("Player {} entered the game with the name {}", Player.PLAYER_BLUESTONE, Player.PLAYER_BLUESTONE.getName());
 
         System.out.flush();
         System.out.println("\n" + state);
         MoveReader reader = new MoveReader();
         GameResult game;
-        boolean askName = true;
         while (!state.isGameOver()) {
             Cell cellToMove;
 
@@ -62,18 +67,23 @@ public class StonesGame {
             System.out.println(state);
             System.out.flush();
         }
-        if (state.getWinner() != null)
+        if (state.getWinner() != null) {
+            log.info("{} won!", state.getWinner());
             System.out.printf("%s won%n", state.getWinner().getName());
-        else
-            System.out.println("Draw");
-
+        }
         game = GameResult.builder()
                 .player(state.getWinner().getName())
                 .duration(Duration.between(begin, LocalDateTime.now()))
+                .solved(true)
+                .turns(state.getCurrentPlayer().getTurns())
                 .build();
 
         dao.persist(game);
 
+        List<GameResult> toPrint = dao.findBest(5);
+        for(GameResult gameResult : toPrint) {
+            System.out.println(gameResult.toString());
+        }
 
     }
 

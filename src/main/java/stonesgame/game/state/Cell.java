@@ -12,8 +12,9 @@ public class Cell {
 
     /**
      * Character denoting empty space on the board.
-     */
+
     public static final char EMPTY = '_';
+     */
 
     /**
      * The x-variable of the location of the {@code Cell}
