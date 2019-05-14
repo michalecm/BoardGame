@@ -275,7 +275,6 @@ public class StonesGameState {
      * @return true if it is, false if it is not
      */
     public boolean isInBounds(int row, int col){
-       log.info("{}",row >= 0 && row < 5 && col >= 0 && col < 5);
         return row >= 0 && row < 5 && col >= 0 && col < 5;
     }
 
