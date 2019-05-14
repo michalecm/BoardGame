@@ -17,13 +17,6 @@ public enum Player {
     PLAYER_TIE('T');
 
     private char symbol;
-    @Setter
-    @NotNull
-    private String name;
-
-    @Setter
-    @Getter
-    private int turns;
 
     Player(char symbol) {
         this.symbol = symbol;

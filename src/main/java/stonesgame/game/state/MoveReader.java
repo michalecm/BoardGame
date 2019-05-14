@@ -27,7 +27,7 @@ public class MoveReader {
     public Cell readMove(StonesGameState state) {
 
         if (state.isGameOver()) {
-            log.error("Player {} tried to play, but the game is already over! Something went wrong :(.", state.getCurrentPlayer().getName());
+            log.error("Player {} tried to play, but the game is already over! Something went wrong :(.", StonesGame.getName(state));
             throw new IllegalStateException("Game is over!");
         }
 
@@ -38,18 +38,18 @@ public class MoveReader {
 
             String[] tokens = scanner.nextLine().trim().split("\\s+");
             if(tokens.length != 2) {
-                log.error("Player {} had too great or too few inputs for play coordinats.", state.getCurrentPlayer().getName());
+                log.error("Player {} had too great or too few inputs for play coordinats.", StonesGame.getName(state));
                 throw new IllegalArgumentException("You had either too few or too many arguments!");
             }
 
             int row = Integer.parseInt(tokens[0]);
             int col = Integer.parseInt(tokens[1]);
             if(!state.isInBounds(row, col)) {
-                log.error("{}'s choice of move was out of bounds.", state.getCurrentPlayer().getName());
+                log.error("{}'s choice of move was out of bounds.", StonesGame.getName(state));
                 throw new IllegalMoveException("Your choice of cell was out of bounds. Please try again!");
             }
             if(!state.isValidMove(row, col)) {
-                log.error("{}'s choie of move was invalid because there is already a piece at the location.", state.getCurrentPlayer().getName());
+                log.error("{}'s choice of move was invalid because there is already a piece at the location.", StonesGame.getName(state));
                 throw new IllegalMoveException("Your choice of cell was already taken by your opponent. Please try again!");
             }
             else {
@@ -58,7 +58,7 @@ public class MoveReader {
 
         } catch (Exception e) {
             if(e instanceof NumberFormatException) {
-                log.error("Player {} tried to input non-integer values as coordinates.", state.getCurrentPlayer().getName());
+                log.error("Player {} tried to input non-integer values as coordinates.", StonesGame.getName(state));
                 System.out.println("Please enter input that is of the type INTEGER.");
             }
             else {

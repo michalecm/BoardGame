@@ -34,7 +34,6 @@ public class StonesGameState {
     /**
      * The array to be instantiated for the actual board of the game.
      */
-    //@Setter(AccessLevel.PRIVATE)
     private char[][] gameBoard;
 
     /**
@@ -46,6 +45,10 @@ public class StonesGameState {
      * The current player.
      */
     private Player currentPlayer;
+
+    private int playerOneMoves;
+
+    private int playerTwoMoves;
 
     /**
      * The state of the game: ongoing or over.
@@ -68,8 +71,13 @@ public class StonesGameState {
         setGameOver(false);
         setNumOfMarks(0);
         setWinner(null);
+        setPlayerTwoMoves(0);
+        setPlayerOneMoves(0);
     }
 
+    /**
+     *
+     */
     public void init(){
         for(int x = 0; x < gameBoard.length; x++){
             for(int y = 0; y < gameBoard[x].length; y++) {
@@ -96,11 +104,18 @@ public class StonesGameState {
         }
 
         gameBoard[row][col] = getCurrentPlayer().getSymbol();
-        log.info("Player {} placed a piece at ({},{})", currentPlayer, row, col);
-        getCurrentPlayer().setTurns(getCurrentPlayer().getTurns() + 1);
+        log.info("Player {} placed a piece at ({},{})", StonesGame.getName(this), row, col);
+        incrementCurrentPlayerMoves();
         numOfMarks++;
         calcIsGameOver(row, col);
         currentPlayer = currentPlayer.opponent();
+    }
+
+    public void incrementCurrentPlayerMoves() {
+        switch(currentPlayer) {
+            case PLAYER_REDSTONE: setPlayerOneMoves(getPlayerOneMoves() + 1); break;
+            case PLAYER_BLUESTONE: setPlayerTwoMoves(getPlayerTwoMoves() + 1); break;
+        }
     }
 
     /**
