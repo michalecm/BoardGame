@@ -7,12 +7,8 @@ import stonesgame.game.results.GameResult;
 import stonesgame.game.results.GameResultDao;
 import stonesgame.game.util.guice.PersistenceModule;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import java.lang.reflect.GenericArrayType;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -89,6 +85,12 @@ public class StonesGame {
 
     }
 
+    /**
+     * Method to retrieve the name of the current player, or the name of the winner.
+     *
+     * @param stonesGameState the current {@code StonesGameState} instance of the game
+     * @return the name of the winner or current player
+     */
     public static String getName(StonesGameState stonesGameState) {
         if(stonesGameState.isGameOver()){
             switch(stonesGameState.getWinner()) {
@@ -107,6 +109,12 @@ public class StonesGame {
         return null;
     }
 
+    /**
+     * Method to return the number of turns made by the winning player.
+     *
+     * @param stonesGameState the current {@code StonesGameState} instance of the game
+     * @return the number of turns made by the winning player
+     */
     public static int getTurns(StonesGameState stonesGameState) {
         switch (stonesGameState.getWinner()) {
             case PLAYER_REDSTONE:

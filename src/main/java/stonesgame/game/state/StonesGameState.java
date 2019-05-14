@@ -76,7 +76,7 @@ public class StonesGameState {
     }
 
     /**
-     *
+     * Method used to refill the {@code gameBoard} with {@code EMPTY} spaces.
      */
     public void init(){
         for(int x = 0; x < gameBoard.length; x++){
@@ -111,6 +111,9 @@ public class StonesGameState {
         currentPlayer = currentPlayer.opponent();
     }
 
+    /**
+     * Method that increments the move count of the current player.
+     */
     public void incrementCurrentPlayerMoves() {
         switch(currentPlayer) {
             case PLAYER_REDSTONE: setPlayerOneMoves(getPlayerOneMoves() + 1); break;
