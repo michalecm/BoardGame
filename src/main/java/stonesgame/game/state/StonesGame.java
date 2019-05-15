@@ -66,7 +66,7 @@ public class StonesGame {
             System.out.flush();
         }
         if (state.getWinner() != null) {
-            log.info("{} won!", state.getWinner());
+            log.info("{} won!", getName(state));
             System.out.printf("%s won%n", getName(state));
         }
         game = GameResult.builder()
