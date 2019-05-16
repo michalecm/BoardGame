@@ -81,8 +81,6 @@ public class StonesGame {
         dao.persist(game);
 
         String[] headers = game.getHeaders();
-        for(String s: headers)
-            System.out.println(s);
 
         List<GameResult> toPrint = dao.findBest(5);
         String[][] data = new String[toPrint.size()][headers.length];

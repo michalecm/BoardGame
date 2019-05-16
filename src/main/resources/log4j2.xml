@@ -8,16 +8,16 @@
         <Root level="off">
             <AppenderRef ref="Console"/>
         </Root>
-        <Logger name="org.hibernate.SQL" level="all" additivity="false">
+        <Logger name="org.hibernate.SQL" level="off" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="org.hibernate.type.descriptor.sql" level="all" additivity="false">
+        <Logger name="org.hibernate.type.descriptor.sql" level="off" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="org.hibernate.tool.hbm2ddl" level="all" additivity="false">
+        <Logger name="org.hibernate.tool.hbm2ddl" level="off" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="org.hibernate.validator" level="all" additivity="false">
+        <Logger name="org.hibernate.validator" level="off" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
     </Loggers>
