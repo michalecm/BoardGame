@@ -1,7 +1,9 @@
 package stonesgame.game.state;
 
+import com.github.lalyos.jfiglet.FigletFont;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.mitchtalmadge.asciidata.table.ASCIITable;
 import lombok.extern.slf4j.Slf4j;
 import stonesgame.game.results.GameResult;
 import stonesgame.game.results.GameResultDao;
@@ -37,7 +39,7 @@ public class StonesGame {
         GameResultDao dao = injector.getInstance(GameResultDao.class);
         Scanner scanner = new Scanner(System.in);
         LocalDateTime begin = LocalDateTime.now();
-        System.out.println("Welcome to STONESGAME! ~ ~ ~ ~\n");
+        System.out.println(FigletFont.convertOneLine("STONESGAME"));
         do {
             System.out.print("Player 1 of REDSTONE, please enter your name: ");
             playerOne = (scanner.nextLine());
@@ -78,10 +80,26 @@ public class StonesGame {
 
         dao.persist(game);
 
+        String[] headers = game.getHeaders();
+        for(String s: headers)
+            System.out.println(s);
+
         List<GameResult> toPrint = dao.findBest(5);
-        for(GameResult gameResult : toPrint) {
-            System.out.println(gameResult.toString());
+        String[][] data = new String[toPrint.size()][headers.length];
+        int countY=0;
+        for(int x = 0; x < 5; x++) {
+            data[x][countY++] = toPrint.get(x).getId().toString();
+            data[x][countY++] = toPrint.get(x).getPlayer();
+            data[x][countY++] = ((Boolean)(toPrint.get(x).isSolved())).toString();
+            data[x][countY++] = ((Integer)(toPrint.get(x).getTurns())).toString();
+            data[x][countY++] = toPrint.get(x).getDuration().toString();
+            data[x][countY++] = toPrint.get(x).getCreated().toString();
+            countY = 0;
         }
+
+        System.out.println(FigletFont.convertOneLine("HIGH SCORES"));
+        System.out.println(ASCIITable.fromData(headers, data).toString());
+
 
     }
 

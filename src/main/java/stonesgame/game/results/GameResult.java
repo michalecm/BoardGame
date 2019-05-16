@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 
@@ -57,6 +59,17 @@ public class GameResult {
     @PrePersist
     protected void onPersist() {
         created = ZonedDateTime.now();
+    }
+
+    public String[] getHeaders() {
+        Field[] names = GameResult.class.getDeclaredFields();
+        StringBuilder s = new StringBuilder();
+        for(Field x : names) {
+            s.append(x.getName().toUpperCase());
+            s.append(" ");
+        }
+
+        return s.toString().split(" ");
     }
 
 }
